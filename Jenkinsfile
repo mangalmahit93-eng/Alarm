@@ -1,5 +1,10 @@
+
 pipeline {
     agent { label 'local1' }
+
+    options {
+        skipDefaultCheckout(true)
+    }
 
     stages {
         stage('Checkout') {
@@ -10,7 +15,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'ls -la'
+                sh '''
+                    echo "Workspace contents:"
+                    ls -la
+                '''
             }
         }
     }
