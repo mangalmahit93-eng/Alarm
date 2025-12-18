@@ -1,23 +1,44 @@
-
 pipeline {
-    agent { label 'local1' }
-
+    agent {
+        docker {
+            image 'python:3.10-slim'
+        }
+    }
     options {
         skipDefaultCheckout(true)
     }
 
     stages {
-        stage('Checkout') {
+        stage('Check Python') {
             steps {
-                checkout scm
+                sh 'python --version'
             }
         }
 
-        stage('Build') {
+        stage('Create Virtualenv') {
             steps {
                 sh '''
-                    echo "Workspace contents:"
-                    ls -la
+                python -m venv venv
+                . venv/bin/activate
+                pip install --upgrade pip
+                '''
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                . venv/bin/activate
+                pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Script') {
+            steps {
+                sh '''
+                . venv/bin/activate
+                python app.py
                 '''
             }
         }
