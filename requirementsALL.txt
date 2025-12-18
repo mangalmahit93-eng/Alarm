@@ -15,7 +15,7 @@ cycler==0.10.0
 dnspython==2.0.0
 emoji==0.6.0
 ffmpeg==1.4
-ffpyplayer==4.3.1
+ffpyplayer
 gTTS==2.1.1
 gensim
 geopy==2.0.0
